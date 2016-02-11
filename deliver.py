@@ -10,15 +10,13 @@ def distance(posA, posB):
 	return int(math.ceil(math.sqrt((posA['x'] - posB['x'])**2 + (posA['y'] - posB['y'])**2)))
 
 def fetchBestTarget(data, pos):
-	indexes = [distance(pos, warehouse) for warehouse in data['warehouses'] if sum(warehouse['products']) > 0]
-	warehouse = data['warehouses'][indexes.index(min(indexes))]
-
-	products = [x for x in xrange(len(warehouse['products'])) if warehouse['products'][x] > 0]
-
-	indexes = [distance(order, warehouse) for order in data['orders'] if len(order['products']) > 0 and False not in [p in order['products'] for p in products]]
-	if len(indexes) == 0:
-		indexes = [distance(order, warehouse) for order in data['orders'] if len(order['products']) > 0]
+	indexes = [distance(order, pos) for order in data['orders'] if len(order['products']) > 0]
 	order = data['orders'][indexes.index(min(indexes))]
+
+	indexes = [distance(warehouse, order) for warehouse in data['warehouses'] if sum(warehouse['products']) > 0 and False not in [warehouse['products'][x] > 0 for x in order['products']]]
+	if len(indexes) == 0:
+		indexes = [distance(warehouse, order) for warehouse in data['warehouses'] if sum(warehouse['products']) > 0]
+	warehouse = data['warehouses'][indexes.index(min(indexes))]
 
 	return order, warehouse
 
