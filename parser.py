@@ -38,9 +38,10 @@ def parse(f):
 				nborders = int(line)
 			else:
 				data = line.split(' ')
-				if i%3 == 0: # First line
+				pos = (i-lastsection-1)
+				if pos%3 == 0: # First line
 					orders.append({'x': data[0], 'y': data[1]})
-				elif i%3 == 1: # Second line
+				elif pos%3 == 1: # Second line
 					orders[-1]['nbproducts'] = int(data[0])
 				else: # Third line
 					orders[-1]['products'] = [int(x) for x in data]
