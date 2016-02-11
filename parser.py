@@ -37,14 +37,14 @@ def parse(f):
 			if i == lastsection: # number of products
 				nborders = int(line)
 			else:
-				data = line.split(' ')
+				data = [int(x) for x in line.split(' ')]
 				pos = (i-lastsection-1)
 				if pos%3 == 0: # First line
 					orders.append({'x': data[0], 'y': data[1]})
 				elif pos%3 == 1: # Second line
-					orders[-1]['nbproducts'] = int(data[0])
+					orders[-1]['nbproducts'] = data[0]
 				else: # Third line
-					orders[-1]['products'] = [int(x) for x in data]
+					orders[-1]['products'] = data[:]
 		i += 1
 	return locals()
 
