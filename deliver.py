@@ -47,6 +47,7 @@ def deliver(data):
 							# For each product the order wants, check if the chosen warehouse has the item, and so, fetch them the weight does not overflow
 							d['products'].append(product)
 							#order['products'].remove(product)
+							warehouse['products'][product] -= 1
 
 					for product in set(d['products']): # Loading action + position update
 						actions.append(str(drones.index(d))
