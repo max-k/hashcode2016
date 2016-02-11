@@ -36,6 +36,7 @@ def deliver(data):
 	finished = False
 	turns = data['turns']
 	nbActions = len(actions)
+	HAX = 1000
 	while (not finished) and turns: # While we have turns and the delivering is not finished
 		for d in drones:
 			if not d['order']:
@@ -93,7 +94,8 @@ def deliver(data):
 				data['orders'].append(d['order'])
 				d['order'] = None
 
-		finished = False not in [len(order['products']) == 0 for order in orders] or len(actions) == nbActions
+		HAX -= 1
+		finished = HAX <= 0#  False not in [len(order['products']) == 0 for order in orders] or len(actions) == nbActions
 		nbActions = len(actions)
 	#for order in data['orders']: print order
 	return actions
