@@ -65,7 +65,7 @@ def deliver(data):
 				delivering = [0 for x in xrange(data['products'])] # number of delivered items per product
 				delivered = False
 				for product in d['order']['products'][:]:
-					if product in d['products']:
+					if product in d['products'][:]:
 						d['products'].remove(product)
 						d['order']['products'].remove(product)
 						delivering[product] += 1
@@ -84,6 +84,8 @@ def deliver(data):
 
 				if delivered:
 					turns -= distance(d['order'], d)
+					d['x'] = d['order']['x']
+					d['y'] = d['order']['y']
 
 				# Resetting the drone
 				data['orders'].append(d['order'])
